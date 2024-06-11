@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Termo de Responsabilidade</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="style/GeradorStyle.css" rel="stylesheet">
+    <link rel="icon" href="img/logoIco.png" type="icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <img src="img/logo.png" style="width: 120px;">
+    </div>
+    <div class="container">
+        <h1 class="text-center mb-4">Selecione o equipamento</h1>
+        <div class="icon-container" style="justify-content: center;">
+            <img id="icon-celular" src="img/smartphone.png" class="equipment-icon" alt="Celular">
+            <img id="icon-notebook" src="img/laptop.png" class="equipment-icon" alt="Notebook">
+            <img id="icon-computador" src="img/computer.png" class="equipment-icon" alt="Computador">
+            <img id="icon-coletor" src="img/coletor.png" class="equipment-icon" alt="Coletor">
+            <img id="icon-fone" src="img/headphones.png" class="equipment-icon" alt="Fone de Ouvido">
+            <img id="icon-mochila" src="img/backpack.png" class="equipment-icon" alt="Mochila">
+            <img id="icon-perifericos" src="img/perifericos.png" class="equipment-icon" alt="Perifericos">
+        </div>
+        <form id="term-form">
+
+            <div class="form-group">
+                <label for="name">Nome do colaborador <strong style="color: red;">*</strong></label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ex: Nome Completo" required>
+                <span class="error" id="name-error">Informe o nome do colaborador.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Ex: nome.sobrenome@alcast.com.br">
+            </div>
+
+            <div class="form-group">
+                <label for="equipment">Equipamento <strong style="color: red;">*</strong></label>
+                <input type="text" class="form-control" id="equipment" name="equipment" placeholder="Ex: Notebook Dell Latitude 5420" required>
+                <span class="error" id="equipment-error">Informe o equipamento.</span>
+            </div>
+
+            <div id="form-group">
+                <label for="observacao">
+                    Observações
+                    <input type="checkbox" id="observacao-checkbox" style="margin-left: 10px;">
+                </label>
+                <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Observações do produto e adicionais" disabled>
+            </div><br>
+
+            <div class="form-group">
+                <label for="patrimony">
+                    Patrimônio
+                    <input type="checkbox" id="patrimony-checkbox" style="margin-left: 10px;">
+                </label>
+                <input type="number" class="form-control" id="patrimony" name="patrimony" placeholder="Ex: 1234" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="serial">
+                    Número de Série
+                    <input type="checkbox" id="serial-checkbox" style="margin-left: 10px;">
+                </label>
+                <input type="text" class="form-control" id="serial" name="serial" placeholder="Ex: TW45H4F3" disabled>
+            </div>
+
+            <div class="form-group" id="chip-group" style="display: none;">
+                <label for="chip">
+                    TIM Chip
+                    <input type="checkbox" id="chip-checkbox" style="margin-left: 10px;">
+                </label>
+                <input type="text" class="form-control" id="chip" name="chip" placeholder="Ex: (46) 9 9912-1234" disabled>
+            </div>
+
+            <div class="wrapper">
+                <button type="button" class="btn btn-primary btn-block" id="btn_hover_gerar" onclick="generateTerm()">Gerar Termo</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="term-display" class="term-display">
+        <h2 style="margin-left: 48px; text-align: center;">TERMO DE RESPONSABILIDADE PELO USO DE EQUIPAMENTOS.</h2><br>
+        <p style="margin-left: 48px; font-size: 20px;">Nome do Colaborador: <span id="term-name"></span></p>
+        <p style="margin-left: 48px; font-size: 20px;">E-mail: <span id="term-email"></span></p><br>
+        
+        <div class="term-description" style="font-size: 20px; margin-left: 48px; text-align: justify; margin-right: 48px;">
+            <p>Neste ato, declaro que recebi da empresa ALCAST DO BRASIL S/A., a
+               Título de empréstimo, para meu uso exclusivo, conforme determinado
+               na lei, os equipamentos especificados neste termo de responsabilidade,
+               comprometendo-me a mantê-los em perfeito estado de conservação,
+               ficando ciente de que:</p>
+            <p>1 - Caso o(s) equipamento(s) e/ou seu(s) componente(s) for(em) danificado(s)
+                e/ou inutilizado(s) por emprego inadequado, mau uso, negligência ou extravio,
+                a empresa poderá realizar a sua substituição, e cobrará o valor do(s)
+                equipamento(s) e/ou componente(s) da mesma marca ou equivalente ao preço
+                praticado quando da substituição, autorizando o colaborador que referido
+                seja realizado mediante o desconto em folha de pagamento ou outra
+                de desconto autorizados em lei, da importância correspondente ao dano
+                ou prejuízo, nos termos do art. 462, §1º, da CLT.</p>
+
+            <p>2 - Em caso de dano, inutilização ou extravio do equipamento deverei comunicar
+                    ao setor competente e seu superior.</p>
+
+            <p>3 - Terminando os serviços ou no caso de rescisão do contrato de trabalho,
+                    devolverei o equipamento completo e em perfeito estado de conservação,
+                    considerando-se o tempo do uso do mesmo, ao setor competente.</p>
+
+            <p>4 - Estando os equipamentos em minha posse, estarei sujeito a inspeções sem
+                    prévio aviso, e, deverei adotar as medidas determinadas pela Alcast para sua
+                    utilização, como por exemplo e não se limitando, armazenamento de
+                    documentos em locais estabelecidos pela Alcast (servidores, locais de rede), não
+                    instalar/desinstalar programas sem a autorização do setor competente, utilizar
+                    os recursos observando as normas internas da Alcast.
+
+            <p>5 - Não poderei ceder o equipamento a terceiros sem autorização do superior imediato
+                    e do setor responsável.</p>
+        </div><br>
+        <ul style="margin-left: 48px; font-size: 20px;">
+            <li>Equipamento: <span id="term-equipment"></span></li>
+            <li>Patrimônio: <span id="term-patrimony"></span></li>
+            <li>Serial: <span id="term-serial"></span></li>
+            <li>TIM Chip: <span id="term-chip"></span></li>
+            <li>Observações: <span id="term-observacao"></span></li>
+        </ul>
+        <p style="margin-left: 48px; font-size: 20px;">Data de recebimento pelo colaborador: ___/___/______.</p>
+        <p style="margin-left: 48px; font-size: 20px;">Assinatura do colaborador:___________________________________________________________.</p>
+        <img style="width: 950px; margin-left: 48px; height: 50px; margin-top: 140px;" src="rodapé.jpg" alt="Rodapé"><br><br>
+
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOV3femh-Xp1bAR4vItpoe-Di1_iaqxAe2rqbJIEIfnw&s" alt="Logo da Empresa" style="width: 120px;">
+        </div>
+        <div class="term-description" style="font-size: 20px; margin-left: 48px; text-align: justify; margin-right: 48px;">
+            <p>Devolução atestamos que o bem foi entregue em ___/___/______, nas seguintes
+               condições:</p>
+            <p><img class="caixa_seleca" src="img/caixa_selecao.png"> Perfeito estado     
+               <img style="margin-left: 20px;" class="caixa_seleca" src="img/caixa_selecao.png"> Apresentando defeitos    
+               <img style="margin-left: 20px;" class="caixa_seleca" src="img/caixa_selecao.png"> Faltando peças/acessórios.
+            </p>    
+        </div><br>
+        
+        <div style="border: #000, 1px, solid; width: 950px; height: 800px; margin-left: 48px; font-size: 16px;">
+            <p style="font-size: 20px; margin-left: 10px;">Descrição de defeitos apresentados e/ou falta de peças/acessórios (componentes).</p>
+        </div><br>
+        <div class="term-description" style="font-size: 20px; margin-left: 48px; text-align: justify; margin-right: 48px;">
+            <p>_____________________________________________________________________________________</p>
+            <p>(Data / Assinatura / Nome do Responsável pelo recebimento)</p><br>
+            <p>Data de devolução pelo colaborador ___/___/______.</p>
+            <p>Assinatura do colaborador:___________________________________________________________________.</p>
+        </div>
+        <img style="width: 950px; height: 50px; margin-top: 160px; margin-left: 48px;" src="img/rodapé.jpg" alt="Rodapé"><br><br>
+        <button style="font-family: Arial, Helvetica, sans-serif;" class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button style="font-family: Arial, Helvetica, sans-serif;" class="btn btn-secondary" onclick="editTerm()">Editar</button>
+    </div><br><br>
+    <h6 style="text-align: center; color: aliceblue;">&copy; Developed by Lucas Blem</h6>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="script/GeradorScript.js"></script>
+</body>
+</html>
